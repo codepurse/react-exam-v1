@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const DivOval = ({ label, data }) => {
   return (
@@ -12,12 +14,39 @@ const DivOval = ({ label, data }) => {
 export default function ProductDetails({ data }) {
   const { title, price, rating, stock, category, description } = data;
   const [count, setCount] = useState(0);
+  const [cart, setCart] = useState([]);
+  const router = useRouter();
 
-  const handleClickAdd = () => setCount((prevCount) => prevCount + 1);
-  const handleClickMinus = () => setCount((prevCount) => prevCount - 1);
+  const handleClickAdd = () => {
+    if (count != stock) setCount((prevCount) => prevCount + 1);
+  };
+
+  const handleClickMinus = () => {
+    if (count != 0) setCount((prevCount) => prevCount - 1);
+  };
+
+  const handleAddCart = (e) => {
+    setCart((prev) => [...prev, { item: title, quantity: count }]);
+  };
+
+  useEffect(() => {
+    return () => localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    if (localStorage.getItem("cart")) {
+      setCart(JSON.parse(localStorage.getItem("cart")));
+    }
+  }, []);
 
   return (
     <div>
+      <div className="divCart">
+        <i className="iCart" onClick={() => router.push("/cart")}>
+          <AiOutlineShoppingCart />
+        </i>
+        <span>1</span>
+      </div>
       <p className="pTitle">{title}</p>
       <p className="pPrice">${price}.00 USD</p>
       <div className="form-inline">
@@ -41,6 +70,7 @@ export default function ProductDetails({ data }) {
         Description
       </p>
       <p className="pDescription">{description}</p>
+      <button onClick={handleAddCart}>Add to cart</button>
     </div>
   );
 }

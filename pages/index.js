@@ -1,42 +1,55 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import Select from "react-select";
+import Products from "../components/products";
 
 export default function Index() {
-  const router = useRouter();
+  const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
-  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("https://dummyjson.com/products");
-      const products = await response.json();
+      const response = await fetch("https://dummyjson.com/products/categories");
+      const categories = await response.json();
       const arr = [];
-      products.products.map((item) => {
+      categories.map((item) => {
         arr.push({
-          value: item.id,
-          label: item.title,
-          thumbnail: item.thumbnail,
+          value: item,
+          label: item,
         });
       });
-      setItems(arr);
+      setCategories(arr);
     }
     fetchData();
   }, []);
 
-  const handleChange = (e) => setSelected(e);
-
-  const handleClick = () => router.push(`/product/${selected.value}`);
-
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
+  const handleChange = (e) => {
+    async function fetchData() {
+      const response = await fetch(
+        `https://dummyjson.com/products/category/${e.value}`
+      );
+      const products = await response.json();
+      setItems(products.products);
+    }
+    fetchData();
+  };
 
   return (
-    <>
-      <Select options={items} onChange={handleChange} />
-      <button onClick={handleClick}>View product</button>
-      <img src={selected.thumbnail} />
-    </>
+    <Container style={{ paddingTop: "20px" }}>
+      <Row>
+        <Col lg={12}>
+          <div>
+            <Select
+              options={categories}
+              onChange={handleChange}
+              placeholder="Select categories"
+            />
+          </div>
+        </Col>
+        <Col lg={12}>
+          <Products items={items} />
+        </Col>
+      </Row>
+    </Container>
   );
 }
