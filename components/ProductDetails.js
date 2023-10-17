@@ -26,7 +26,9 @@ export default function ProductDetails({ data }) {
   };
 
   const handleAddCart = (e) => {
-    setCart((prev) => [...prev, { item: title, quantity: count }]);
+    if (count != 0) {
+      setCart((prev) => [...prev, { item: title, quantity: count }]);
+    }
   };
 
   useEffect(() => {
@@ -70,7 +72,9 @@ export default function ProductDetails({ data }) {
         Description
       </p>
       <p className="pDescription">{description}</p>
-      <button onClick={handleAddCart}>Add to cart</button>
+      <button onClick={handleAddCart} className="btnAddToCart">
+        Add to cart
+      </button>
     </div>
   );
 }
