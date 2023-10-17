@@ -145,8 +145,15 @@
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 15px;
   border-radius: 10px;
+  justify-content: space-between;
   p {
     margin-bottom: 2px;
   }
   margin-top: 10px;
+  i {
+    cursor: pointer;
+    &:hover {
+      color: red;
+    }
+  }
 }

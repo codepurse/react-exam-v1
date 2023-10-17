@@ -45,7 +45,7 @@ export default function ProductDetails({ data }) {
         <i className="iCart" onClick={() => router.push("/cart")}>
           <AiOutlineShoppingCart />
         </i>
-        <span>1</span>
+        <span>{cart.length}</span>
       </div>
       <p className="pTitle">{title}</p>
       <p className="pPrice">${price}.00 USD</p>
