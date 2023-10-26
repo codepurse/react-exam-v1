@@ -168,3 +168,26 @@
     background-color: orangered;
   }
 }
+
+.divParentColor {
+  border: 2px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 400px;
+}
+
+.box {
+  border: 1px solid black;
+  width: calc(25% - 10px); /* 25% width for each box with some spacing */
+  margin: 5px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  display: flex;
+  min-width: 50px;
+  p {
+    margin-bottom: 0px;
+  }
+}
