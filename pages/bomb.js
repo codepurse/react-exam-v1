@@ -30,13 +30,16 @@ export default function Bomb() {
     generateRandomBox();
   }, [inc, num]);
 
-  const handleChange = (e) => setNum(e.currentTarget.value);
+  const handleChange = (e) => {
+    const val = e.currentTarget.value;
+    if (arr.length === 0) setNum(val);
+  };
 
   return (
     <div className="h-100 align-items-center justify-content-center d-flex">
       <div>
         <p className="text-center">{arr.length}</p>
-        <input type="text" className="w-100 mb-2" onChange={handleChange} />
+        <input type="text" id="txt" value={num} onChange={handleChange} />
         <div className="divParentColor">
           {texts.map((text, i) => (
             <div className="box" key={i} onClick={() => handleClick(text, i)}>
