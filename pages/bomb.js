@@ -35,11 +35,12 @@ export default function Bomb() {
   return (
     <div className="h-100 align-items-center justify-content-center d-flex">
       <div>
+        <p className="text-center">{arr.length}</p>
         <input type="text" className="w-100 mb-2" onChange={handleChange} />
         <div className="divParentColor">
           {texts.map((text, i) => (
             <div className="box" key={i} onClick={() => handleClick(text, i)}>
-              <p>{arr.includes(i) ? text : ""}</p>
+              {arr.includes(i) ? <p id={`box${text}`}>{text}</p> : null}
             </div>
           ))}
         </div>
