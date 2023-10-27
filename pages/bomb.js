@@ -6,6 +6,7 @@ export default function Bomb() {
   const [reset, setReset] = useState(false);
   const [inc, setInc] = useState(0);
   const [num, setNum] = useState(12);
+  const [higestScore, setHighestScore] = useState(0);
 
   const generateRandomBox = () => {
     const randomTexts = Array.from({ length: num }, () =>
@@ -35,10 +36,15 @@ export default function Bomb() {
     if (arr.length === 0) setNum(val);
   };
 
+  const handleShow = () => {
+    const newArray = Array.from({ length: num }, (_, index) => index);
+    setArr(newArray);
+  };
+
   return (
     <div className="h-100 align-items-center justify-content-center d-flex">
       <div>
-        <p className="text-center">{arr.length}</p>
+        <p className="text-center">Score:{arr.length}</p>
         <input type="text" id="txt" value={num} onChange={handleChange} />
         <div className="divParentColor">
           {texts.map((text, i) => (
@@ -47,11 +53,16 @@ export default function Bomb() {
             </div>
           ))}
         </div>
-        {reset && (
-          <button className="mx-auto d-flex mt-2" onClick={handleReset}>
-            Reset
+        <div className="divButton">
+          {reset && (
+            <button className="mt-2" onClick={handleReset}>
+              Reset
+            </button>
+          )}
+          <button className="mt-2" onClick={handleShow}>
+            Show
           </button>
-        )}
+        </div>
       </div>
     </div>
   );
