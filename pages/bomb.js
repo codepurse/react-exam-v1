@@ -7,6 +7,7 @@ export default function Bomb() {
   const [inc, setInc] = useState(0);
   const [num, setNum] = useState(12);
   const [higestScore, setHighestScore] = useState(0);
+  const [disabledScore, setDisableScore] = useState(false);
 
   const generateRandomBox = () => {
     const randomTexts = Array.from({ length: num }, () =>
@@ -25,6 +26,7 @@ export default function Bomb() {
     setInc(inc + 1);
     setReset(false);
     setArr([]);
+    setDisableScore(false);
   };
 
   useEffect(() => {
@@ -37,12 +39,13 @@ export default function Bomb() {
   };
 
   useEffect(() => {
-    if (arr.length > higestScore)
+    if (arr.length > higestScore && !disabledScore)
       setHighestScore(arr.filter((item) => item.txt === "Safe").length);
   }, [arr]);
 
   const handleShow = () => {
-    const newArray = Array.from({ length: num }, (_, index) => index);
+    setDisableScore(true);
+    const newArray = texts.map((text, index) => ({ id: index, txt: text }));
     setArr(newArray);
   };
 
