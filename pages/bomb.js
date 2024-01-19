@@ -44,6 +44,7 @@ export default function Bomb() {
   }, [arr]);
 
   const handleShow = () => {
+    setReset(true);
     setDisableScore(true);
     const newArray = texts.map((text, index) => ({ id: index, txt: text }));
     setArr(newArray);
